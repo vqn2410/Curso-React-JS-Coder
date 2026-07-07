@@ -1,0 +1,10 @@
+body {
+    background-color: #f8f9fa;
+}
+
+/* Ajustes menores si es necesario */
+.ItemImg {
+    object-fit: contain;
+    height: 200px;
+    padding: 1rem;
+}
