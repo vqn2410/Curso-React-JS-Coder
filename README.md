@@ -1,4 +1,4 @@
-# TechStore - E-Commerce 🛒💻
+# CoderStore - E-Commerce 🛒💻
 
 Proyecto final desarrollado para el curso de **React JS** en [CoderHouse](https://www.coderhouse.com/). Es una aplicación web e-commerce completa construida desde cero utilizando React, Vite y Firebase.
 

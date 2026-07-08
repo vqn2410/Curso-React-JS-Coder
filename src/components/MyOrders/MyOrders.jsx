@@ -1,22 +1,32 @@
-import { useState } from 'react';
+import { useState, useEffect, useContext } from 'react';
 import { collection, query, where, getDocs } from 'firebase/firestore';
 import { db } from '../../services/firebaseConfig';
+import { AuthContext } from '../../context/AuthContext';
 import { Link } from 'react-router-dom';
 
 const MyOrders = () => {
+    const { user, userData } = useContext(AuthContext);
+    
     const [email, setEmail] = useState('');
     const [orders, setOrders] = useState([]);
     const [loading, setLoading] = useState(false);
     const [searched, setSearched] = useState(false);
 
-    const handleSearch = async (e) => {
-        e.preventDefault();
+    // Búsqueda automática si el usuario está logueado
+    useEffect(() => {
+        if (user && user.email) {
+            setEmail(user.email);
+            fetchOrders(user.email);
+        }
+    }, [user]);
+
+    const fetchOrders = async (searchEmail) => {
         setLoading(true);
         setSearched(true);
         setOrders([]);
 
         try {
-            const q = query(collection(db, 'ordenes'), where('buyer.email', '==', email));
+            const q = query(collection(db, 'ordenes'), where('buyer.email', '==', searchEmail));
             const querySnapshot = await getDocs(q);
             
             const fetchedOrders = [];
@@ -32,25 +42,36 @@ const MyOrders = () => {
         }
     };
 
+    const handleSearch = (e) => {
+        e.preventDefault();
+        fetchOrders(email);
+    };
+
     return (
         <div className="container mt-5 mb-5">
             <div className="row justify-content-center">
                 <div className="col-md-8">
                     <div className="card shadow-sm border-0 p-4 mb-4">
-                        <h2 className="mb-4 text-center fw-bold">Mis Compras</h2>
-                        <form onSubmit={handleSearch} className="d-flex gap-2">
-                            <input 
-                                type="email" 
-                                className="form-control" 
-                                placeholder="Ingresá tu correo electrónico" 
-                                value={email}
-                                onChange={(e) => setEmail(e.target.value)}
-                                required
-                            />
-                            <button type="submit" className="btn btn-primary fw-bold px-4">
-                                Buscar
-                            </button>
-                        </form>
+                        {user ? (
+                            <h2 className="mb-0 text-center fw-bold">Tus Compras, {userData?.nombre || 'Usuario'}</h2>
+                        ) : (
+                            <>
+                                <h2 className="mb-4 text-center fw-bold">Mis Compras</h2>
+                                <form onSubmit={handleSearch} className="d-flex gap-2">
+                                    <input 
+                                        type="email" 
+                                        className="form-control" 
+                                        placeholder="Ingresá tu correo electrónico" 
+                                        value={email}
+                                        onChange={(e) => setEmail(e.target.value)}
+                                        required
+                                    />
+                                    <button type="submit" className="btn btn-primary fw-bold px-4">
+                                        Buscar
+                                    </button>
+                                </form>
+                            </>
+                        )}
                     </div>
 
                     {loading && (

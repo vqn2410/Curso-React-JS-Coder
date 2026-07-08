@@ -6,14 +6,21 @@ import Cart from './components/Cart/Cart';
 import CheckoutForm from './components/CheckoutForm/CheckoutForm';
 import MyOrders from './components/MyOrders/MyOrders';
 import AdminPanel from './components/Admin/AdminPanel';
+import Favorites from './components/Favorites/Favorites';
+import Register from './components/Auth/Register';
+import Login from './components/Auth/Login';
 import { CartProvider } from './context/CartContext';
+import { FavoritesProvider } from './context/FavoritesContext';
+import { AuthProvider } from './context/AuthContext';
 
 function App() {
   return (
     <div className="App d-flex flex-column min-vh-100">
       <BrowserRouter>
-        <CartProvider>
-          <NavBar />
+        <AuthProvider>
+        <FavoritesProvider>
+          <CartProvider>
+            <NavBar />
 
           <main className="flex-grow-1 pb-5">
             <Routes>
@@ -24,6 +31,9 @@ function App() {
               <Route path='/checkout' element={<CheckoutForm />} />
               <Route path='/mis-compras' element={<MyOrders />} />
               <Route path='/admin' element={<AdminPanel />} />
+              <Route path='/favoritos' element={<Favorites />} />
+              <Route path='/registro' element={<Register />} />
+              <Route path='/login' element={<Login />} />
               <Route path='*' element={<h1 className="text-center mt-5">404 NOT FOUND</h1>} />
             </Routes>
           </main>
@@ -31,7 +41,7 @@ function App() {
             <div className="container">
               <div className="row text-center text-md-start">
                 <div className="col-md-4 mb-4 mb-md-0">
-                  <h5 className="fw-bold text-info mb-3">TechStore</h5>
+                  <h5 className="fw-bold text-primary mb-3">CoderStore</h5>
                   <p className="mb-0">
                     ©Copyright 2026 todos los derechos reservados <br />
                     Created by <span className="text-info fw-bold">NVproductions</span>
@@ -54,7 +64,9 @@ function App() {
               </div>
             </div>
           </footer>
-        </CartProvider>
+          </CartProvider>
+        </FavoritesProvider>
+        </AuthProvider>
       </BrowserRouter>
     </div>
   );

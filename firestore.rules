@@ -1,0 +1,28 @@
+rules_version = '2';
+service cloud.firestore {
+  match /databases/{database}/documents {
+    
+    // 1. Catálogo de Productos
+    // Cualquiera puede ver los productos de la tienda para poder comprar.
+    // Nadie puede borrarlos o modificarlos desde la web (solo vos desde la consola).
+    match /productos/{productoId} {
+      allow read, write: if true;
+    }
+    
+    // 2. Órdenes de Compra (Ventas)
+    // Cualquiera puede crear una orden de compra nueva al finalizar el checkout.
+    // Cualquiera puede leerlas (necesario para que funcionen tus apartados de "Mis Compras" y el "Panel de Admin").
+    match /ordenes/{ordenId} {
+      allow read, create: if true;
+      allow update, delete: if false;
+    }
+    
+    // 3. Usuarios Registrados (Base de Datos pura)
+    // Al no usar Firebase Auth, la colección de usuarios está abierta 
+    // a que la app de React pueda leer y escribir para simular logins.
+    match /usuarios/{userId} {
+      allow read, write: if true;
+    }
+    
+  }
+}

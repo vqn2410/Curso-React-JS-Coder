@@ -1,5 +1,68 @@
 body {
-    background-color: #f8f9fa;
+    background-color: #ebebeb; /* Estilo Mercado Libre */
+}
+
+/* Rediseño de Colores Principales (#ff5a1f) y Secundarios (#000000) */
+:root {
+    --bs-primary: #ff5a1f;
+    --bs-secondary: #000000;
+}
+
+.btn-primary {
+    background-color: #ff5a1f !important;
+    border-color: #ff5a1f !important;
+    color: white !important;
+}
+
+.btn-primary:hover {
+    background-color: #e04f1a !important;
+    border-color: #e04f1a !important;
+}
+
+.text-primary {
+    color: #ff5a1f !important;
+}
+
+.btn-outline-secondary {
+    color: #000000 !important;
+    border-color: #000000 !important;
+}
+
+.btn-outline-secondary:hover {
+    background-color: #000000 !important;
+    color: white !important;
+}
+
+.text-secondary {
+    color: #000000 !important;
+}
+
+.bg-secondary {
+    background-color: #000000 !important;
+}
+
+/* Ícono de corazón en tarjetas */
+.FavoriteIcon {
+    position: absolute;
+    top: 15px;
+    right: 15px;
+    font-size: 1.5rem;
+    cursor: pointer;
+    background: white;
+    border-radius: 50%;
+    width: 35px;
+    height: 35px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+    transition: transform 0.2s;
+    user-select: none;
+    z-index: 10;
+}
+
+.FavoriteIcon:hover {
+    transform: scale(1.1);
 }
 
 /* Ajustes menores si es necesario */
